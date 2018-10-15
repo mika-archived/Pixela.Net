@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Authors>Mikazuki</Authors>
+    <Description>Pixela API client for .NET Standard</Description>
+    <PackageLicenseUrl>https://github.com/mika-f/Pixela/blob/develop/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/mika-f/Pixela</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mika-f/Pixela</RepositoryUrl>
+    <RepositoryType></RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+</Project>
