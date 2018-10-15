@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Install docfx
           command: |
-            wget -q 'https://github.com/dotnet/docfx/releases/download/v2.40.0/docfx.zip' -O docfx.zip
+            wget -q 'https://github.com/dotnet/docfx/releases/download/v2.40/docfx.zip' -O docfx.zip
             unzip -q docfx.zip -d docfx/
       - run:
           name: Generate documents by docfx
