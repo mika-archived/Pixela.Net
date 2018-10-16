@@ -1,4 +1,11 @@
 # Pixela
+
+[![GitHub](https://img.shields.io/github/license/mika-f/Pixela.svg?style=flat-square)](./LICENSE)
+[![NuGet](https://img.shields.io/nuget/v/Pixela.svg?style=flat-square)](https://nuget.org/packages/Pixela)
+[![AppVeyor](https://img.shields.io/appveyor/ci/mika-f/Pixela.svg?style=flat-square)](https://ci.appveyor.com/project/mika-f/pixela)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/mika-f/Pixela/master.svg?style=flat-square)](https://circleci.com/gh/mika-f/Pixela)
+
+
 Pixela API for .NET Standard 2.0
 
 ## Usage
