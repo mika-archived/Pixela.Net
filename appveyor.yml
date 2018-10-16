@@ -1,0 +1,29 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+before_build:
+- cmd: nuget restore .\Source\
+build:
+  project: Source\Pixela.sln
+  publish_nuget: true
+  verbosity: minimal
+cache:
+- Source\packages -> **\packages.config
+configuration: Release
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+nuget:
+  disable_publish_on_pr: true
+platform: Any CPU
+skip_tags: true
