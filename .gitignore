@@ -331,3 +331,4 @@ ASALocalRun/
 
 # Generated docs
 docs/
+*.log

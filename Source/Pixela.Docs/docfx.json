@@ -4,13 +4,14 @@
       "src": [
         {
           "files": [
-            "Pixela/Pixela.csproj"
+            "**/**.csproj"
           ],
           "cwd": "../",
           "exclude": [
             "**/obj/**",
             "**/bin/**",
-            "_site/**"
+            "_site/**",
+            "**/**.Test.csproj"
           ]
         }
       ],
@@ -28,7 +29,6 @@
       {
         "files": [
           "api/*.md",
-          "articles/**.md",
           "toc.yml",
           "*.md"
         ],
