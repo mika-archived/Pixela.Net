@@ -24,8 +24,9 @@ namespace Pixela.Clients
         /// <param name="unit">unit of the quantity</param>
         /// <param name="type">type of quantity</param>
         /// <param name="color">display color of the pixel</param>
+        /// <param name="timezone">timezone for handling this graph, default UTC</param>
         /// <returns></returns>
-        public async Task<ApiResponse> CreateAsync(string id, string name, string unit, GraphType type, GraphColor color)
+        public async Task<ApiResponse> CreateAsync(string id, string name, string unit, GraphType type, GraphColor color, string timezone = null)
         {
             var parameters = new Dictionary<string, object>
             {
@@ -35,6 +36,8 @@ namespace Pixela.Clients
                 ["type"] = type.AsString(),
                 ["color"] = color.AsString()
             };
+            if (!string.IsNullOrWhiteSpace(timezone))
+                parameters.Add("timezone", timezone);
 
             return await Client.SendAsync<ApiResponse>(HttpMethod.Post, $"/v1/users/{Client.Username}/graphs", parameters).Stay();
         }
@@ -54,12 +57,15 @@ namespace Pixela.Clients
         /// </summary>
         /// <param name="graphId">ID of graph</param>
         /// <param name="date">If specify date, will create a graph dating back to the past with that day as the start date</param>
+        /// <param name="mode">Graph display mode</param>
         /// <returns></returns>
-        public async Task<Stream> ShowAsync(string graphId, DateTime? date)
+        public async Task<Stream> ShowAsync(string graphId, DateTime? date, string mode = null)
         {
             var parameters = new Dictionary<string, object>();
             if (date.HasValue)
                 parameters.Add("date", date.Value.ToString("yyyyMMdd"));
+            if (!string.IsNullOrWhiteSpace(mode))
+                parameters.Add("mode", mode);
 
             return await Client.GetAsStreamAsync($"/v1/users/{Client.Username}/graphs/{graphId}", parameters).Stay();
         }
@@ -71,15 +77,22 @@ namespace Pixela.Clients
         /// <param name="name">name of the pixelation graph</param>
         /// <param name="unit">unit of the quantity</param>
         /// <param name="color">display color of the pixel</param>
+        /// <param name="timezone">timezone for handling this graph</param>
+        /// <param name="purgeCacheUrls"></param>
         /// <returns></returns>
-        public async Task<ApiResponse> UpdateAsync(string graphId, string name, string unit, GraphColor color)
+        public async Task<ApiResponse> UpdateAsync(string graphId, string name = null, string unit = null, GraphColor? color = null, string timezone = null, List<string> purgeCacheUrls = null)
         {
-            var parameters = new Dictionary<string, object>
-            {
-                ["name"] = name,
-                ["unit"] = unit,
-                ["color"] = color.AsString()
-            };
+            var parameters = new Dictionary<string, object>();
+            if (!string.IsNullOrWhiteSpace(name))
+                parameters.Add("name", name);
+            if (!string.IsNullOrWhiteSpace(unit))
+                parameters.Add("unit", unit);
+            if (color.HasValue)
+                parameters.Add("color", color.Value.AsString());
+            if (!string.IsNullOrWhiteSpace(timezone))
+                parameters.Add("timezone", timezone);
+            if (purgeCacheUrls != null)
+                parameters.Add("purgeCacheURLs", purgeCacheUrls);
 
             return await Client.SendAsync<ApiResponse>(HttpMethod.Put, $"/v1/users/{Client.Username}/graphs/{graphId}", parameters).Stay();
         }

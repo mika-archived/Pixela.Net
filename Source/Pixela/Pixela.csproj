@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Authors>Mikazuki</Authors>
+    <Authors>Fuyuno Mikazuki</Authors>
     <Description>Pixela API client for .NET Standard</Description>
     <PackageLicenseUrl>https://github.com/mika-f/Pixela/blob/develop/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/mika-f/Pixela</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mika-f/Pixela</RepositoryUrl>
     <RepositoryType></RepositoryType>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
