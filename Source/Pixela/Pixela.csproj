@@ -9,6 +9,8 @@
     <PackageProjectUrl>https://github.com/mika-f/Pixela</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mika-f/Pixela</RepositoryUrl>
     <RepositoryType></RepositoryType>
+    <Version>1.0.2</Version>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

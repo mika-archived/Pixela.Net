@@ -41,8 +41,7 @@ namespace Pixela
         {
             if (parameters != null)
                 endpoint += $"?{string.Join("&", parameters.Select(w => $"{w.Key}=${w.Value.ToString()}"))}";
-            if (!string.IsNullOrWhiteSpace(AccessToken))
-                _client.DefaultRequestHeaders.Add("X-USER-TOKEN", AccessToken);
+            ProcessAuthHeader();
 
             var response = await _client.GetAsync("https://pixe.la" + endpoint).Stay();
             return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().Stay());
@@ -52,8 +51,7 @@ namespace Pixela
         {
             if (parameters != null)
                 endpoint += $"?{string.Join("&", parameters.Select(w => $"{w.Key}=${w.Value.ToString()}"))}";
-            if (!string.IsNullOrWhiteSpace(AccessToken))
-                _client.DefaultRequestHeaders.Add("X-USER-TOKEN", AccessToken);
+            ProcessAuthHeader();
 
             var response = await _client.GetAsync("https://pixe.la" + endpoint).Stay();
             return await response.Content.ReadAsStreamAsync().Stay();
@@ -62,8 +60,7 @@ namespace Pixela
         internal async Task<T> SendAsync<T>(HttpMethod method, string endpoint, IDictionary<string, object> parameters = null)
         {
             var url = "https://pixe.la" + endpoint;
-            if (!string.IsNullOrWhiteSpace(AccessToken))
-                _client.DefaultRequestHeaders.Add("X-USER-TOKEN", AccessToken);
+            ProcessAuthHeader();
 
             HttpResponseMessage response;
             if (parameters != null)
@@ -78,6 +75,17 @@ namespace Pixela
             }
 
             return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().Stay());
+        }
+
+        private void ProcessAuthHeader()
+        {
+            if (string.IsNullOrWhiteSpace(AccessToken))
+                return;
+
+            if (_client.DefaultRequestHeaders.Contains("X-USER-TOKEN"))
+                return;
+
+            _client.DefaultRequestHeaders.Add("X-USER-TOKEN", AccessToken);
         }
     }
 }
