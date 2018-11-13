@@ -44,7 +44,7 @@ namespace Pixela
             if (!string.IsNullOrWhiteSpace(AccessToken))
                 _client.DefaultRequestHeaders.Add("X-USER-TOKEN", AccessToken);
 
-            var response = await _client.GetAsync("https://pixe.la/" + endpoint).Stay();
+            var response = await _client.GetAsync("https://pixe.la" + endpoint).Stay();
             return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().Stay());
         }
 
@@ -55,13 +55,13 @@ namespace Pixela
             if (!string.IsNullOrWhiteSpace(AccessToken))
                 _client.DefaultRequestHeaders.Add("X-USER-TOKEN", AccessToken);
 
-            var response = await _client.GetAsync("https://pixe.la/" + endpoint).Stay();
+            var response = await _client.GetAsync("https://pixe.la" + endpoint).Stay();
             return await response.Content.ReadAsStreamAsync().Stay();
         }
 
         internal async Task<T> SendAsync<T>(HttpMethod method, string endpoint, IDictionary<string, object> parameters = null)
         {
-            var url = "https://pixe.la/" + endpoint;
+            var url = "https://pixe.la" + endpoint;
             if (!string.IsNullOrWhiteSpace(AccessToken))
                 _client.DefaultRequestHeaders.Add("X-USER-TOKEN", AccessToken);
 
