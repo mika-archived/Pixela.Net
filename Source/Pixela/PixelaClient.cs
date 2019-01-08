@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using Pixela.Clients;
 using Pixela.Extensions;
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 namespace Pixela
 {
     public class PixelaClient
@@ -40,7 +42,7 @@ namespace Pixela
         internal async Task<T> GetAsync<T>(string endpoint, IDictionary<string, object> parameters = null)
         {
             if (parameters != null)
-                endpoint += $"?{string.Join("&", parameters.Select(w => $"{w.Key}=${w.Value.ToString()}"))}";
+                endpoint += $"?{string.Join("&", parameters.Select(w => $"{w.Key}=${w.Value}"))}";
 
             var response = await _client.GetAsync("https://pixe.la" + endpoint).Stay();
             return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().Stay());
@@ -49,7 +51,7 @@ namespace Pixela
         internal async Task<Stream> GetAsStreamAsync(string endpoint, IDictionary<string, object> parameters = null)
         {
             if (parameters != null)
-                endpoint += $"?{string.Join("&", parameters.Select(w => $"{w.Key}=${w.Value.ToString()}"))}";
+                endpoint += $"?{string.Join("&", parameters.Select(w => $"{w.Key}=${w.Value}"))}";
 
             var response = await _client.GetAsync("https://pixe.la" + endpoint).Stay();
             return await response.Content.ReadAsStreamAsync().Stay();

@@ -3,6 +3,8 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+// ReSharper disable CollectionNeverUpdated.Global
+
 namespace Pixela.Models
 {
     public class ApiResponse
