@@ -15,6 +15,13 @@ build:
 cache:
 - Source\packages -> **\packages.config
 configuration: Release
+deploy:
+- provider: NuGet
+  api_key:
+    secure: +a9+GBTx9qVZ/LD2Rj+kB8XOHGIqz7yCU9n3cOwFoamoT3MAb/ueKA3NQ4aqRKQE
+  artifact: /.*\.nupkg/
+  on:
+    branch: /master/
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
@@ -35,5 +42,4 @@ nuget:
   disable_publish_on_pr: true
 pull_requests:
   do_not_increment_build_number: true
-platform: Any CPU
 skip_tags: true
