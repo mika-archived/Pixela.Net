@@ -12,13 +12,16 @@ namespace Pixela.Clients
     {
         internal PixelClient(PixelaClient client) : base(client) { }
 
-        private async Task<ApiResponse> CreateAsyncInternal<T>(string graphId, DateTime date, T quantity)
+        private async Task<ApiResponse> CreateAsyncInternal<T>(string graphId, DateTime date, T quantity, string optionalData)
         {
             var parameters = new Dictionary<string, object>
             {
                 ["date"] = date.ToString("yyyyMMdd"),
                 ["quantity"] = quantity.ToString()
             };
+
+            if (!string.IsNullOrWhiteSpace(optionalData))
+                parameters.Add("optionalData", optionalData);
 
             return await Client.SendAsync<ApiResponse>(HttpMethod.Post, $"/v1/users/{Client.Username}/graphs/{graphId}", parameters).Stay();
         }
@@ -29,10 +32,11 @@ namespace Pixela.Clients
         /// <param name="graphId">ID of graph</param>
         /// <param name="date">the date on witch the quantity is to be recorded.</param>
         /// <param name="quantity">quantity to be registered on the specified date</param>
+        /// <param name="optionalData">additional information other than quantity.</param>
         /// <returns></returns>
-        public async Task<ApiResponse> CreateAsync(string graphId, DateTime date, float quantity)
+        public async Task<ApiResponse> CreateAsync(string graphId, DateTime date, float quantity, string optionalData = null)
         {
-            return await CreateAsyncInternal(graphId, date, quantity).Stay();
+            return await CreateAsyncInternal(graphId, date, quantity, optionalData).Stay();
         }
 
         /// <summary>
@@ -41,10 +45,11 @@ namespace Pixela.Clients
         /// <param name="graphId">ID of graph</param>
         /// <param name="date">the date on witch the quantity is to be recorded.</param>
         /// <param name="quantity">quantity to be registered on the specified date</param>
+        /// <param name="optionalData">additional information other than quantity.</param>
         /// <returns></returns>
-        public async Task<ApiResponse> CreateAsync(string graphId, DateTime date, int quantity)
+        public async Task<ApiResponse> CreateAsync(string graphId, DateTime date, int quantity, string optionalData = null)
         {
-            return await CreateAsyncInternal(graphId, date, quantity).Stay();
+            return await CreateAsyncInternal(graphId, date, quantity, optionalData).Stay();
         }
 
         /// <summary>
@@ -53,15 +58,16 @@ namespace Pixela.Clients
         /// <param name="graphId">ID of graph</param>
         /// <param name="date">date to register the quantity</param>
         /// <returns></returns>
-        public async Task<object> ShowAsync(string graphId, DateTime date)
+        public async Task<Pixel> ShowAsync(string graphId, DateTime date)
         {
-            var response = await Client.GetAsync<ApiResponse>($"/v1/users/{Client.Username}/graphs/{graphId}/{date:yyyyMMdd}").Stay();
-            return response.Extends["quantity"];
+            return await Client.GetAsync<Pixel>($"/v1/users/{Client.Username}/graphs/{graphId}/{date:yyyyMMdd}").Stay();
         }
 
-        private async Task<ApiResponse> UpdateAsyncInternal<T>(string graphId, DateTime date, T quantity)
+        private async Task<ApiResponse> UpdateAsyncInternal<T>(string graphId, DateTime date, T quantity, string optionalData)
         {
             var parameters = new Dictionary<string, object> {["quantity"] = quantity.ToString()};
+            if (!string.IsNullOrWhiteSpace(optionalData))
+                parameters.Add("optionalData", optionalData);
             return await Client.SendAsync<ApiResponse>(HttpMethod.Put, $"/v1/users/{Client.Username}/graphs/{graphId}/{date:yyyyMMdd}", parameters).Stay();
         }
 
@@ -71,10 +77,11 @@ namespace Pixela.Clients
         /// <param name="graphId">ID of graph</param>
         /// <param name="date">date to update the quantity</param>
         /// <param name="quantity">the quantity to be registered on specified date.</param>
+        /// <param name="optionalData">additional information other than quantity.</param>
         /// <returns></returns>
-        public async Task<ApiResponse> UpdateAsync(string graphId, DateTime date, float quantity)
+        public async Task<ApiResponse> UpdateAsync(string graphId, DateTime date, float quantity, string optionalData = null)
         {
-            return await UpdateAsyncInternal(graphId, date, quantity).Stay();
+            return await UpdateAsyncInternal(graphId, date, quantity, optionalData).Stay();
         }
 
         /// <summary>
@@ -83,10 +90,11 @@ namespace Pixela.Clients
         /// <param name="graphId">ID of graph</param>
         /// <param name="date">date to update the quantity</param>
         /// <param name="quantity">the quantity to be registered on specified date.</param>
+        /// <param name="optionalData">additional information other than quantity.</param>
         /// <returns></returns>
-        public async Task<ApiResponse> UpdateAsync(string graphId, DateTime date, int quantity)
+        public async Task<ApiResponse> UpdateAsync(string graphId, DateTime date, int quantity, string optionalData = null)
         {
-            return await UpdateAsyncInternal(graphId, date, quantity).Stay();
+            return await UpdateAsyncInternal(graphId, date, quantity, optionalData).Stay();
         }
 
         /// <summary>

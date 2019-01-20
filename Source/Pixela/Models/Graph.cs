@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 using Pixela.Enums;
@@ -23,5 +25,11 @@ namespace Pixela.Models
         [JsonProperty("color")]
         [JsonConverter(typeof(StringEnumConverter))]
         public GraphColor Color { get; set; }
+
+        [JsonProperty("timezone")]
+        public string Timezone { get; set; }
+
+        [JsonProperty("purgeCacheURLs")]
+        public IEnumerable<string> PurgeCacheUrls { get; set; }
     }
 }

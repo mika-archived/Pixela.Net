@@ -106,5 +106,15 @@ namespace Pixela.Clients
         {
             return await Client.SendAsync<ApiResponse>(HttpMethod.Delete, $"/v1/users/{Client.Username}/graphs/{graphId}").Stay();
         }
+
+        /// <summary>
+        ///     Displays the details of the graph in html format.
+        /// </summary>
+        /// <param name="graphId">UD of graph</param>
+        /// <returns></returns>
+        public async Task<string> DetailsAsync(string graphId)
+        {
+            return await Task.FromResult($"https://pixe.la/v1/users/{Client.Username}/graphs/{graphId}.html");
+        }
     }
 }
