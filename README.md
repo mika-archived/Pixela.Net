@@ -23,7 +23,7 @@ var graphId = "test";
 await client.Graphs.CreateAsync(graphId, "Test Graph", "commit", GraphType.Int, GraphColor.Sora);
 
 // browse the graph
-Process.Start(await client.Graphs.DetailsAsync());
+Process.Start(await client.Graphs.DetailsAsync(graphId));
 
 // get graphs
 var graphs = await client.Graphs.ListAsync();
