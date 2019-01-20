@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/mika-f/Pixela</RepositoryUrl>
     <RepositoryType></RepositoryType>
     <Version>1.0.4</Version>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
