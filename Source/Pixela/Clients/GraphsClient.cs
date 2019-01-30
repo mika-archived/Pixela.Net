@@ -114,7 +114,7 @@ namespace Pixela.Clients
         /// <returns></returns>
         public async Task<string> DetailsAsync(string graphId)
         {
-            return await Task.FromResult($"https://pixe.la/v1/users/{Client.Username}/graphs/{graphId}.html");
+            return await Task.FromResult($"https://pixe.la/v1/users/{Client.Username}/graphs/{graphId}.html").Stay();
         }
     }
 }
