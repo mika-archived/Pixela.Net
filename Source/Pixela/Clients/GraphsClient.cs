@@ -25,8 +25,9 @@ namespace Pixela.Clients
         /// <param name="type">type of quantity</param>
         /// <param name="color">display color of the pixel</param>
         /// <param name="timezone">timezone for handling this graph, default UTC</param>
+        /// <param name="selfSufficient">when SVG graph referenced, pixel of this graph itself will be increment or decrement, default none</param>
         /// <returns></returns>
-        public async Task<ApiResponse> CreateAsync(string id, string name, string unit, GraphType type, GraphColor color, string timezone = null)
+        public async Task<ApiResponse> CreateAsync(string id, string name, string unit, GraphType type, GraphColor color, string timezone = null, SufficientType? selfSufficient = null)
         {
             var parameters = new Dictionary<string, object>
             {
@@ -38,6 +39,8 @@ namespace Pixela.Clients
             };
             if (!string.IsNullOrWhiteSpace(timezone))
                 parameters.Add("timezone", timezone);
+            if(selfSufficient.HasValue)
+                parameters.Add("selfSufficient", selfSufficient.Value.AsString());
 
             return await Client.SendAsync<ApiResponse>(HttpMethod.Post, $"/v1/users/{Client.Username}/graphs", parameters).Stay();
         }
@@ -79,8 +82,9 @@ namespace Pixela.Clients
         /// <param name="color">display color of the pixel</param>
         /// <param name="timezone">timezone for handling this graph</param>
         /// <param name="purgeCacheUrls"></param>
+        /// <param name="selfSufficient">when SVG graph referenced, pixel of this graph itself will be increment or decrement, default none</param>
         /// <returns></returns>
-        public async Task<ApiResponse> UpdateAsync(string graphId, string name = null, string unit = null, GraphColor? color = null, string timezone = null, List<string> purgeCacheUrls = null)
+        public async Task<ApiResponse> UpdateAsync(string graphId, string name = null, string unit = null, GraphColor? color = null, string timezone = null, List<string> purgeCacheUrls = null, SufficientType? selfSufficient = null)
         {
             var parameters = new Dictionary<string, object>();
             if (!string.IsNullOrWhiteSpace(name))
@@ -93,6 +97,8 @@ namespace Pixela.Clients
                 parameters.Add("timezone", timezone);
             if (purgeCacheUrls != null)
                 parameters.Add("purgeCacheURLs", purgeCacheUrls);
+            if (selfSufficient.HasValue)
+                parameters.Add("selfSufficient", selfSufficient.Value.AsString());
 
             return await Client.SendAsync<ApiResponse>(HttpMethod.Put, $"/v1/users/{Client.Username}/graphs/{graphId}", parameters).Stay();
         }
