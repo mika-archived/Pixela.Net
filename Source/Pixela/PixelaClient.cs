@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -48,13 +47,13 @@ namespace Pixela
             return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().Stay());
         }
 
-        internal async Task<Stream> GetAsStreamAsync(string endpoint, IDictionary<string, object> parameters = null)
+        internal async Task<string> GetAsync(string endpoint, IDictionary<string, object> parameters = null)
         {
             if (parameters != null)
                 endpoint += $"?{string.Join("&", parameters.Select(w => $"{w.Key}=${w.Value}"))}";
 
             var response = await _client.GetAsync("https://pixe.la" + endpoint).Stay();
-            return await response.Content.ReadAsStreamAsync().Stay();
+            return await response.Content.ReadAsStringAsync().Stay();
         }
 
         internal async Task<T> SendAsync<T>(HttpMethod method, string endpoint, IDictionary<string, object> parameters = null)
@@ -66,7 +65,7 @@ namespace Pixela
             {
                 var json = JsonConvert.SerializeObject(parameters);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                response = await _client.SendAsync(new HttpRequestMessage(method, url) {Content = content}).Stay();
+                response = await _client.SendAsync(new HttpRequestMessage(method, url) { Content = content }).Stay();
             }
             else
             {
